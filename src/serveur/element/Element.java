@@ -3,6 +3,8 @@ package serveur.element;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import utilitaires.Constantes;
+
 /**
  * Un element du jeu (potion ou personnage). 
  *
@@ -10,6 +12,11 @@ import java.util.HashMap;
 public abstract class Element implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	protected boolean freeze = false;
+	
+	protected int nbToursFreeze = 0;
+	
 	
 	/**
 	 * Nom de l'element.
@@ -20,6 +27,8 @@ public abstract class Element implements Serializable {
 	 * Groupe a l'origine de l'element. 
 	 */
 	protected String groupe;
+	
+	protected int maitre;
 
 	/**
 	 * Caracteristiques de l'element (au moins sa vie).
@@ -36,6 +45,7 @@ public abstract class Element implements Serializable {
 		this.nom = nom;
 		this.groupe = groupe;
 		this.caracts = Caracteristique.mapCaracteristiquesDefaut();
+		this.maitre=0;
 	}
 	
 	/**
@@ -44,7 +54,7 @@ public abstract class Element implements Serializable {
 	 * @param groupe d'etudiants de l'element
 	 * @param caracts caracteristiques de l'element
 	 */
-	public Element(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {	
+	public Element(String nom, String groupe, HashMap<Caracteristique, Integer> caracts, int ref) {	
 		this(nom, groupe);
 
 		// toutes les caracteristiques sont toujours initialisees
@@ -52,6 +62,7 @@ public abstract class Element implements Serializable {
 		for(Caracteristique c : caracts.keySet()) {
 			this.caracts.put(c, caracts.get(c));
 		}
+		this.maitre=ref;
 	}
 	
 	/**
@@ -84,4 +95,36 @@ public abstract class Element implements Serializable {
 	public String toString() {
 		return getNomGroupe() + " " + caracts;
 	}
+	
+	/**
+	 * @return the freeze
+	 */
+	public boolean isFreeze() {
+		return freeze;
+	}
+	
+	
+	/**
+	 *  Freeze un personnage
+	 */
+	public void freezer()
+	{
+		freeze = true;
+		nbToursFreeze =  Constantes.NB_TOURS_FREEZE;
+	}
+	
+	
+	/**
+	 *  Décrémente le nombre de tour durant lequel on reste figé
+	 */
+	public void decrementerFreeze()
+	{
+		nbToursFreeze--;
+		
+		if (nbToursFreeze == 0)
+		{
+			freeze = false;
+		}
+	}
+	
 }

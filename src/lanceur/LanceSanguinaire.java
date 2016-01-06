@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.HashMap;
 
-import client.StrategieMoine;
+import client.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
 import utilitaires.Calculs;
@@ -15,13 +15,13 @@ import utilitaires.Constantes;
  * Lance une Console avec un Element sur l'Arene. 
  * A lancer apres le serveur, eventuellement plusieurs fois.
  */
-public class LanceMoine {
+public class LanceSanguinaire {
 	
-	private static String usage = "USAGE : java " + LanceMoine.class.getName() + " [ port [ ipArene ] ]";
+	private static String usage = "USAGE : java " + LanceSanguinaire.class.getName() + " [ port [ ipArene ] ]";
 
-	public void lancerMoine(int port , String ipArene)
+	public void lancerSanguinaire(int port , String ipArene)
 	{
-		String nom = "Moine";
+		String nom = "Sanguinaire";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G" + Calculs.nombreAleatoire(0,99); 
@@ -50,13 +50,13 @@ public class LanceMoine {
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
 			// seule la force n'a pas sa valeur par defaut (exemple)
-			caracts.put(Caracteristique.FORCE, Calculs.nombreAleatoire(1, 10));
-			caracts.put(Caracteristique.DEFENSE, Calculs.nombreAleatoire(0, 0));
-			caracts.put(Caracteristique.ESQUIVE, Calculs.nombreAleatoire(0, 10));
+			caracts.put(Caracteristique.FORCE, 
+					Calculs.nombreAleatoire(15, 40));
+			caracts.put(Caracteristique.DEFENSE, Calculs.nombreAleatoire(10, 15));
 			
 			Point position = Calculs.positionAleatoireArene();
 			
-			new StrategieMoine(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger,0);
+			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, 0);
 			logger.info("Lanceur", "Creation du personnage reussie");
 			
 		} catch (Exception e) {
@@ -90,8 +90,8 @@ public class LanceMoine {
 				ipArene = args[1];
 			}
 		}
-
-		LanceMoine m = new LanceMoine();
-		m.lancerMoine(port,ipArene);
+				
+		LanceSanguinaire s = new LanceSanguinaire();
+		s.lancerSanguinaire(port,ipArene);	
 	}
 }

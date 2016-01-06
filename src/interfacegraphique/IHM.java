@@ -29,6 +29,7 @@ import interfacegraphique.interfacesimple.ElementsJPanel;
 import interfacegraphique.interfacesimple.FenetreClassement;
 import interfacegraphique.interfacesimple.FenetreDetail;
 import interfacegraphique.interfacesimple.components.VictoryScreen;
+import lanceur.*;
 import logger.LoggerProjet;
 import serveur.IAreneIHM;
 import serveur.vuelement.VueElement;
@@ -36,6 +37,7 @@ import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
+
 
 /**
  * Interface graphique.
@@ -248,11 +250,297 @@ public class IHM extends JFrame implements Runnable {
 			}
 		});
 
-
+		
 		affichageMenu.add(affichageJauge);
 		// affichageMenu.add(controleAction);
 		menuBar.add(affichageMenu);
-		setJMenuBar(menuBar);
+		
+		
+		/*---------------------------------------------------------------------
+		 * 
+		 * 			MENU INSERTION DES PERSONNAGES
+		 * 
+		 ---------------------------------------------------------------------*/
+		
+		
+		JMenu insererMenu = new JMenu ("Personnages");
+		menuBar.add(insererMenu);
+		
+		
+		Action ajouterAlchimiste = new AbstractAction("Alchimiste") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceAlchimiste a = new LanceAlchimiste();
+				a.lancerAlchimiste(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		Action ajouterArcher = new AbstractAction("Archer") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceArcher a = new LanceArcher();
+				a.lancerArcher(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		Action ajouterBomberman = new AbstractAction("Bomberman") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceBomberman b = new LanceBomberman();
+				b.lancerBomberman(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		Action ajouterMage = new AbstractAction("Mage") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceMage m = new LanceMage();
+				m.lancerMage(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		Action ajouterMoine = new AbstractAction("Moine") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceMoine m = new LanceMoine();
+				m.lancerMoine(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		Action ajouterPersonnage = new AbstractAction("Personnage") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePersonnage p = new LancePersonnage();
+				p.lancerPersonnage(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		Action ajouterSanguinaire = new AbstractAction("Sanguinaire") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceSanguinaire s = new LanceSanguinaire();
+				s.lancerSanguinaire(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		Action ajouterTank = new AbstractAction("Tank") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceTank t = new LanceTank();
+				t.lancerTank(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		Action ajouterVoleur = new AbstractAction("Voleur") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LanceVoleur v = new LanceVoleur();
+				v.lancerVoleur(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		insererMenu.add(ajouterAlchimiste);
+		insererMenu.add(ajouterArcher);
+		insererMenu.add(ajouterBomberman);
+		insererMenu.add(ajouterMage);
+		insererMenu.add(ajouterMoine);
+		insererMenu.add(ajouterPersonnage);
+		insererMenu.add(ajouterSanguinaire);
+		insererMenu.add(ajouterTank);
+		insererMenu.add(ajouterVoleur);
+		setJMenuBar(menuBar);	
+		
+		
+		
+		
+		/*---------------------------------------------------------------------
+		 * 
+		 * 			MENU INSERTION DES POTIONS SPECIALES
+		 * 
+		 ---------------------------------------------------------------------*/
+		
+		
+		JMenu insererMenuPotionsSpe = new JMenu ("Competences");
+		menuBar.add(insererMenuPotionsSpe);
+		
+		
+		Action ajouterBouclier = new AbstractAction("Bouclier") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionBouclier b = new LancePotionBouclier();
+				b.lancerPotionBouclier(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+
+		Action ajouterFreeze = new AbstractAction("Freeze") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionFreeze t = new LancePotionFreeze();
+				t.lancerPotionFreeze(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterTeleportation = new AbstractAction("Teleportation") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionTeleportation t = new LancePotionTeleportation();
+				t.lancerPotionTeleportation(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);	
+			}
+		};
+		
+		
+		
+		
+		insererMenuPotionsSpe.add(ajouterBouclier);
+		insererMenuPotionsSpe.add(ajouterFreeze);
+		insererMenuPotionsSpe.add(ajouterTeleportation);
+		
+		
+		
+		
+		/*---------------------------------------------------------------------
+		 * 
+		 * 			MENU INSERTION DES POTIONS CARACTERISTIQUES
+		 * 
+		 ---------------------------------------------------------------------*/
+		
+		
+		JMenu insererMenuPotionsCarac = new JMenu ("Potions");
+		menuBar.add(insererMenuPotionsCarac);
+		
+		
+		Action ajouterPotion = new AbstractAction("Anduril") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotion p = new LancePotion();
+				p.lancerPotion(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionDefenseBonus = new AbstractAction("Defense Bonus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionDefenseB p = new LancePotionDefenseB();
+				p.lancerPotionDefenseB(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionDefenseMalus = new AbstractAction("Defense Malus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionDefenseM p = new LancePotionDefenseM();
+				p.lancerPotionDefenseM(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionEsquiveBonus = new AbstractAction("Esquive Bonus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionEsquiveB p = new LancePotionEsquiveB();
+				p.lancerPotionEsquiveB(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionEsquiveMalus = new AbstractAction("Esquive Malus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionEsquiveM p = new LancePotionEsquiveM();
+				p.lancerPotionEsquiveM(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionForceBonus = new AbstractAction("Force Bonus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionForceB p = new LancePotionForceB();
+				p.lancerPotionForceB(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionForceMalus = new AbstractAction("Force Malus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionForceM p = new LancePotionForceM();
+				p.lancerPotionForceM(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionInitiativeBonus = new AbstractAction("Initiative Bonus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionInitiativeB p = new LancePotionInitiativeB();
+				p.lancerPotionInitiativeB(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionInitiativeMalus = new AbstractAction("Initiative Malus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionInitiativeM p = new LancePotionInitiativeM();
+				p.lancerPotionInitiativeM(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionVieBonus = new AbstractAction("Vie Bonus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionVieB p = new LancePotionVieB();
+				p.lancerPotionVieB(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		Action ajouterPotionVieMalus = new AbstractAction("Vie Malus") {
+			private static final long serialVersionUID = 1L;
+			public void actionPerformed(ActionEvent ae) {
+				
+				LancePotionVieM p = new LancePotionVieM();
+				p.lancerPotionVieM(Constantes.PORT_DEFAUT,Constantes.IP_DEFAUT);
+			}
+		};
+		
+		
+		insererMenuPotionsCarac.add(ajouterPotion);
+		insererMenuPotionsCarac.add(ajouterPotionDefenseBonus);
+		insererMenuPotionsCarac.add(ajouterPotionDefenseMalus);
+		insererMenuPotionsCarac.add(ajouterPotionEsquiveBonus);
+		insererMenuPotionsCarac.add(ajouterPotionEsquiveMalus);
+		insererMenuPotionsCarac.add(ajouterPotionForceBonus);
+		insererMenuPotionsCarac.add(ajouterPotionForceMalus);
+		insererMenuPotionsCarac.add(ajouterPotionInitiativeBonus);
+		insererMenuPotionsCarac.add(ajouterPotionInitiativeMalus);
+		insererMenuPotionsCarac.add(ajouterPotionVieBonus);
+		insererMenuPotionsCarac.add(ajouterPotionVieMalus);
+		
 	}
 
 	/**

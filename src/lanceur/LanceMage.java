@@ -1,54 +1,61 @@
 package lanceur;
 
+import java.awt.Point;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 
+import client.StrategieMage;
 import logger.LoggerProjet;
-import serveur.IArene;
 import serveur.element.Caracteristique;
-import serveur.element.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
-public class LancePotionTeleportation extends LancePotion{
+/**
+ * Lance une Console avec un Element sur l'Arene. 
+ * A lancer apres le serveur, eventuellement plusieurs fois.
+ */
+public class LanceMage {
 	
-	private static String usage = "USAGE : java " + LancePotion.class.getName() + " [ port [ ipArene ] ]";
+	private static String usage = "USAGE : java " + LanceMage.class.getName() + " [ port [ ipArene ] ]";
 
-	public void lancerPotionTeleportation(int port , String ipArene)
+	public void lancerMage(int port , String ipArene)
 	{
-		String nom = "Téléportation";
+		String nom = "Mage";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
-		String groupe = "G7"; 
+		String groupe = "G" + Calculs.nombreAleatoire(0,99); 
+		
+		// nombre de tours pour ce personnage avant d'etre deconnecte 
+		// (30 minutes par defaut)
+		// si negatif, illimite
+		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
 		
 		// creation du logger
 		LoggerProjet logger = null;
 		try {
-			logger = new LoggerProjet(true, "potion_"+nom+groupe);
+			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);
 		}
 		
-		// lancement de la potion
+		// lancement du serveur
 		try {
-			IArene arene = (IArene) java.rmi.Naming.lookup(Constantes.nomRMI(ipArene, port, "Arene"));
-
-			logger.info("Lanceur", "Lancement de la potion sur le serveur...");
+			String ipConsole = InetAddress.getLocalHost().getHostAddress();
 			
-			// caracteristiques de la potion
+			logger.info("Lanceur", "Creation du personnage...");
+			
+			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 0);
-			caracts.put(Caracteristique.FORCE, 0);
-			caracts.put(Caracteristique.INITIATIVE, 0);
-			caracts.put(Caracteristique.ESQUIVE, 0);
-			caracts.put(Caracteristique.DEFENSE, 0);
-			caracts.put(Caracteristique.BOUCLIER, 0);
+			// seule la force n'a pas sa valeur par defaut (exemple)
+			caracts.put(Caracteristique.FORCE, 
+					Calculs.nombreAleatoire(20, 30));
 			
+			Point position = Calculs.positionAleatoireArene();
 			
-			// ajout de la potion
-			arene.ajoutePotion(new Potion(nom, groupe, caracts), Calculs.positionAleatoireArene());
-			logger.info("Lanceur", "Lancement de la potion reussi");
+			new StrategieMage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, 0);
+			logger.info("Lanceur", "Creation du personnage reussie");
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
@@ -56,7 +63,6 @@ public class LancePotionTeleportation extends LancePotion{
 			System.exit(ErreurLancement.suivant);
 		}
 	}
-	
 	
 	public static void main(String[] args) {
 		// init des arguments
@@ -83,8 +89,7 @@ public class LancePotionTeleportation extends LancePotion{
 			}
 		}
 		
-		LancePotionTeleportation t = new LancePotionTeleportation();
-		t.lancerPotionTeleportation(port,ipArene);	
+		LanceMage m = new LanceMage();
+		m.lancerMage(port,ipArene);
 	}
 }
-

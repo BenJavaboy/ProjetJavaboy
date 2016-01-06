@@ -18,6 +18,6 @@ public class Potion extends Element {
 	 * @param caracts caracteristiques de la potion
 	 */
 	public Potion(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {
-		super(nom, groupe, caracts);
+		super(nom, groupe, caracts, 0);
 	}
 }

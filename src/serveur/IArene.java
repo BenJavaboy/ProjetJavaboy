@@ -163,9 +163,6 @@ public interface IArene extends Remote {
 	 */
 	public boolean ramassePotion(int refRMI, int refPotion) throws RemoteException;
 	
-	
-	public boolean ramassePotionTeleportation(int refRMI, int refPotion) throws RemoteException;
-	
 	/**
 	 * Execute un duel entre le personnage correspondant a la console donnee 
 	 * et l'adversaire correspondant a la reference RMI donnee.
@@ -207,10 +204,8 @@ public interface IArene extends Remote {
 	
 	public boolean deplaceVoleur(int refRMI, Point objectif) throws RemoteException;
 	
-	public boolean teleportation(int refRMI) throws RemoteException;
-	
 	/**
-	 * Fais méditer un moine durant un tour
+	 * Fais mï¿½diter un moine durant un tour
 	 * @param refRMI
 	 * @return
 	 * @throws RemoteException
@@ -255,8 +250,12 @@ public interface IArene extends Remote {
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException;
 
 	public boolean lanceAttaqueDistance(int refRMI, int refRMIAdv) throws RemoteException;
+	
+	public boolean lancerPotion(int refRMI, Point pointC)throws RemoteException;
 
-	
-	
+	boolean fuir(int refRMI, Point refCible) throws RemoteException;
+
+	public boolean poserPotion(int refRMI, Point pointC)throws RemoteException;
+
 }
 

@@ -10,15 +10,53 @@ import serveur.element.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
-public class LancePotionVie extends LancePotion{
+public class LancePotionDefenseB extends LancePotion{
 	
 	private static String usage = "USAGE : java " + LancePotion.class.getName() + " [ port [ ipArene ] ]";
 
-	public static void main(String[] args) {
-		String nom = "Anduril";
+	public void lancerPotionDefenseB(int port , String ipArene)
+	{
+		String nom = "Potion de defense";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
-		String groupe = "G" + Calculs.nombreAleatoire(0,99); 
+		String groupe = "G7"; 
+		
+		// creation du logger
+		LoggerProjet logger = null;
+		try {
+			logger = new LoggerProjet(true, "potion_"+nom+groupe);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+		
+		// lancement de la potion
+		try {
+			IArene arene = (IArene) java.rmi.Naming.lookup(Constantes.nomRMI(ipArene, port, "Arene"));
+
+			logger.info("Lanceur", "Lancement de la potion sur le serveur...");
+			
+			// caracteristiques de la potion
+			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
+			caracts.put(Caracteristique.VIE, 0);
+			caracts.put(Caracteristique.FORCE, 0);
+			caracts.put(Caracteristique.INITIATIVE, 0);
+			caracts.put(Caracteristique.ESQUIVE, 0);
+			caracts.put(Caracteristique.DEFENSE, +20);
+			
+			
+			// ajout de la potion
+			arene.ajoutePotion(new Potion("Potion de defense", "G7", caracts), Calculs.positionAleatoireArene());
+			logger.info("Lanceur", "Lancement de la potion reussi");
+			
+		} catch (Exception e) {
+			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+	}
+	
+	public static void main(String[] args) {
 		
 		// init des arguments
 		int port = Constantes.PORT_DEFAUT;
@@ -43,40 +81,9 @@ public class LancePotionVie extends LancePotion{
 				ipArene = args[1];
 			}
 		}
-		
-		// creation du logger
-		LoggerProjet logger = null;
-		try {
-			logger = new LoggerProjet(true, "potion_"+nom+groupe);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
-		
-		// lancement de la potion
-		try {
-			IArene arene = (IArene) java.rmi.Naming.lookup(Constantes.nomRMI(ipArene, port, "Arene"));
-
-			logger.info("Lanceur", "Lancement de la potion sur le serveur...");
-			
-			// caracteristiques de la potion
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 100);
-			caracts.put(Caracteristique.FORCE, 0);
-			caracts.put(Caracteristique.INITIATIVE, 0);
-			caracts.put(Caracteristique.ESQUIVE, 0);
-			caracts.put(Caracteristique.DEFENSE, 0);
-			
-			
-			// ajout de la potion
-			arene.ajoutePotion(new Potion("Potion de vie", "G7", caracts), Calculs.positionAleatoireArene());
-			logger.info("Lanceur", "Lancement de la potion reussi");
-			
-		} catch (Exception e) {
-			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
+				
+				
+		LancePotionDefenseB p = new LancePotionDefenseB();
+		p.lancerPotionDefenseB(port,ipArene);		
 	}
 }
-

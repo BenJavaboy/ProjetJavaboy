@@ -16,7 +16,7 @@ import utilitaires.Constantes;
 /**
  * Strategie d'un personnage. 
  */
-public class StrategieArcher extends StrategiePersonnage {
+public class StrategieMage extends StrategiePersonnage {
 	
 	
 
@@ -31,7 +31,7 @@ public class StrategieArcher extends StrategiePersonnage {
 	 * @param position position initiale du personnage dans l'arene
 	 * @param logger gestionnaire de log
 	 */
-	public StrategieArcher(String ipArene, int port, String ipConsole, 
+	public StrategieMage(String ipArene, int port, String ipConsole, 
 			String nom, String groupe, HashMap<Caracteristique, Integer> caracts,
 			int nbTours, Point position, LoggerProjet logger, int ref) {
 		
@@ -89,7 +89,7 @@ public class StrategieArcher extends StrategiePersonnage {
 				
 			}
 			
-			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION_ARCHER)
+			else if (distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION_MAGE)
 			{
 				if(elemPlusProche instanceof Potion) { // potion
 					// ramassage

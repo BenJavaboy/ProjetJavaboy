@@ -8,9 +8,13 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -185,13 +189,123 @@ public class AreneJPanel extends JPanel {
 			g.fillOval(coordX - 5, coordY - 5, ELEMENT_SIZE + 10, ELEMENT_SIZE + 10);
 			g.setColor(vueElement.getCouleur());
 		}
-		
-		if(vueElement instanceof VuePersonnage) {
-			g.fillOval(coordX, coordY, ELEMENT_SIZE, ELEMENT_SIZE);	
-		} else {
-			Polygon p = new Polygon(); // triangle
-			p = creeTriangle(coordX + ELEMENT_SIZE/2, coordY + ELEMENT_SIZE/2 - 1, ELEMENT_SIZE);
-			g.fillPolygon(p);
+		BufferedImage image = null;
+		if(vueElement instanceof VuePersonnage) 
+		{	
+			if (vueElement.getElement().getNom().equals("Alchimiste"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\alchimiste.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 2, coordY,20,20, null); 
+			}
+			else if (vueElement.getElement().getNom().equals("Archer"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\archer.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX, coordY,15,15, null); 
+			}
+			else if (vueElement.getElement().getNom().equals("Bomberman"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\bomberman.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 5, coordY,25,25, null); 
+			}
+			else if (vueElement.getElement().getNom().equals("Mage"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\mage.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 3, coordY,20,25, null);
+			}
+			else if (vueElement.getElement().getNom().equals("Moine"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\moine.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX, coordY,20,20, null);
+			}
+			else if (vueElement.getElement().getNom().equals("Sanguinaire"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\sanguinaire.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX, coordY,20,20, null);
+			}
+			else if (vueElement.getElement().getNom().equals("Tank"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\tank.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 5, coordY,25,25, null);
+			}
+			else if (vueElement.getElement().getNom().equals("Voleur"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\voleur.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 5, coordY,25,25, null);
+			}
+			
+			else
+			{
+				g.fillOval(coordX, coordY, ELEMENT_SIZE, ELEMENT_SIZE);
+			};	
+		} 
+		else 
+		{
+			if (vueElement.getElement().getNom().equals("Bouclier"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\bouclier.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 3, coordY,20,20, null); 
+			}
+			else if (vueElement.getElement().getNom().equals("Téléportation"))
+			{
+				try {
+					image = ImageIO.read(new File("images\\teleportation.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(image, coordX - 3, coordY,15,15, null); 
+			}
+			else
+			{
+				Polygon p = new Polygon(); // triangle
+				p = creeTriangle(coordX + ELEMENT_SIZE/2, coordY + ELEMENT_SIZE/2 - 1, ELEMENT_SIZE);
+				g.fillPolygon(p);
+			}
 		}
 	}
 
@@ -220,7 +334,7 @@ public class AreneJPanel extends JPanel {
 			coordXString = (int) (rect.getWidth() - 2 - stringWidth);
 		}
 		
-		int coordYString = coordY - 10;
+		int coordYString = coordY - 5;
 		boolean descendu = false;
 		
 		if (coordY < stringHeight) {

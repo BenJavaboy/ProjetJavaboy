@@ -32,7 +32,31 @@ public class Duel extends Interaction<VuePersonnage> {
 	public void interagit() {
 		try {
 			Personnage pAttaquant = attaquant.getElement();
-			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
+			int forceAttaquant = 0;
+			int baisseArmure = 0;
+			int ralentissement = 0;
+			int spell = 0;
+			if ((pAttaquant.getNom().equals("Mage")))
+			{
+				spell = new Random().nextInt(3) + 1;
+				switch (spell)
+				{
+					case 1 : forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE) * 2;
+							 break;
+					
+					case 2 : forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
+							 baisseArmure = 20;
+							 break;
+						
+					case 3 : forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
+							 ralentissement = 30;
+							 break;
+				}
+			}
+			else
+			{
+				forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
+			}
 			int r = new Random().nextInt(100) + 1;
 			//mécanique d'esquive
 			if (r > defenseur.getElement().getCaract(Caracteristique.ESQUIVE))
@@ -44,7 +68,7 @@ public class Duel extends Interaction<VuePersonnage> {
 				
 				
 				/* Si l'attaquant est un archer alors l'adversaire ne recule pas, ... */
-				if (!(pAttaquant.getNom().equals("Archer")))
+				if (!(pAttaquant.getNom().equals("Archer")) && !(pAttaquant.getNom().equals("Mage")))
 				{
 					Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 		
@@ -52,12 +76,38 @@ public class Duel extends Interaction<VuePersonnage> {
 					defenseur.setPosition(positionEjection);
 				}
 	
-				// degats
-				if (perteVie > 0) {
-					arene.incrementeCaractElement(defenseur, Caracteristique.VIE, - perteVie);
+				arene.incrementeCaractElement(defenseur, Caracteristique.VIE, - perteVie);
+				if (pAttaquant.getNom().equals("Mage"))
+				{
+					if (spell == 1)
+					{
+						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " lance une boule de feu ("
+								+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
+					}
+					else if (spell == 2)
+					{
+						arene.incrementeCaractElement(defenseur, Caracteristique.DEFENSE, - baisseArmure);
+						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " lance un éclair ("
+								+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur) + " et lui baisse son armure de 20");
+					}
+					else
+					{
+						arene.incrementeCaractElement(defenseur, Caracteristique.INITIATIVE, - ralentissement);
+						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " lance un éclair de givre ("
+								+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur) + " et le ralentit de 30");
+					}
 					
+				}
+				else
+				{
 					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
-							+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
+						+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
+				}
+				
+				if (pAttaquant.getNom().equals("Sanguinaire"))
+				{
+					pAttaquant.incrementeCaract(Caracteristique.VIE, perteVie / 2);
+					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " regagne " + perteVie/2);
 				}
 					
 			}

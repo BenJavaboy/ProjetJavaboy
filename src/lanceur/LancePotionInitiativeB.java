@@ -10,13 +10,13 @@ import serveur.element.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
-public class LancePotionTeleportation extends LancePotion{
+public class LancePotionInitiativeB extends LancePotion{
 	
 	private static String usage = "USAGE : java " + LancePotion.class.getName() + " [ port [ ipArene ] ]";
 
-	public void lancerPotionTeleportation(int port , String ipArene)
+	public void lancerPotionInitiativeB(int port , String ipArene)
 	{
-		String nom = "Téléportation";
+		String nom = "Potion d'initiative";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G7"; 
@@ -40,14 +40,13 @@ public class LancePotionTeleportation extends LancePotion{
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
 			caracts.put(Caracteristique.VIE, 0);
 			caracts.put(Caracteristique.FORCE, 0);
-			caracts.put(Caracteristique.INITIATIVE, 0);
+			caracts.put(Caracteristique.INITIATIVE, +20);
 			caracts.put(Caracteristique.ESQUIVE, 0);
 			caracts.put(Caracteristique.DEFENSE, 0);
-			caracts.put(Caracteristique.BOUCLIER, 0);
 			
 			
 			// ajout de la potion
-			arene.ajoutePotion(new Potion(nom, groupe, caracts), Calculs.positionAleatoireArene());
+			arene.ajoutePotion(new Potion("Potion d'initiative", "G7", caracts), Calculs.positionAleatoireArene());
 			logger.info("Lanceur", "Lancement de la potion reussi");
 			
 		} catch (Exception e) {
@@ -55,8 +54,8 @@ public class LancePotionTeleportation extends LancePotion{
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);
 		}
+		
 	}
-	
 	
 	public static void main(String[] args) {
 		// init des arguments
@@ -83,8 +82,8 @@ public class LancePotionTeleportation extends LancePotion{
 			}
 		}
 		
-		LancePotionTeleportation t = new LancePotionTeleportation();
-		t.lancerPotionTeleportation(port,ipArene);	
+		LancePotionInitiativeB p = new LancePotionInitiativeB();
+		p.lancerPotionInitiativeB(port,ipArene);
 	}
 }
 

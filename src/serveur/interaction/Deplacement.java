@@ -70,6 +70,30 @@ public class Deplacement {
 			}
 		}
 	}
+	
+	public void fuir(Point position, Point Cible) throws RemoteException {
+	
+		double X,Y;
+		if( position.getX() < Cible.getX())
+		{
+			X = (Cible.getX() - position.getX() - position.getX());
+		}
+		else
+		{
+			X =  (position.getX()- Cible.getX()  + position.getX());
+		}
+		
+		if( position.getY() < Cible.getY())
+		{
+			Y = (Cible.getY() - position.getY() - position.getY());
+		}
+		else
+		{
+			Y =  (position.getY()- Cible.getY()  + position.getY());
+		}
+		Cible.setLocation(X,Y);
+		seDirigeVers(Cible);
+	}
 
 	/**
 	 * Deplace ce sujet d'une case en direction de la case donnee.
@@ -87,8 +111,10 @@ public class Deplacement {
 		}
 	}
 	
+	
+	
 	/**
-	 * Fais méditer un moine en lui augmentant ses statistiques à chaque tour
+	 * Fais mï¿½diter un moine en lui augmentant ses statistiques ï¿½ chaque tour
 	 * @throws RemoteException
 	 */
 	public void mediter () throws RemoteException {

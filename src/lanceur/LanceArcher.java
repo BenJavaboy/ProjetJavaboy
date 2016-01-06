@@ -18,8 +18,9 @@ import utilitaires.Constantes;
 public class LanceArcher {
 	
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
-
-	public static void main(String[] args) {
+	
+	public void lancerArcher(int port , String ipArene)
+	{
 		String nom = "Archer";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
@@ -28,7 +29,51 @@ public class LanceArcher {
 		// nombre de tours pour ce personnage avant d'etre deconnecte 
 		// (30 minutes par defaut)
 		// si negatif, illimite
-		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
+		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;			
+		
+		// creation du logger
+		LoggerProjet logger = null;
+		try {
+			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+		
+		// lancement du serveur
+		try {
+			String ipConsole = InetAddress.getLocalHost().getHostAddress();
+			
+			logger.info("Lanceur", "Creation du personnage...");
+			
+			// caracteristiques du personnage
+			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
+			
+			/* La valeur de la force est compris entre 20 et 60 */
+			caracts.put(Caracteristique.FORCE, 
+					Calculs.nombreAleatoire(20, 60));
+			
+			/* La valeur de la dï¿½fense est compris entre 0 et 5 */
+			caracts.put(Caracteristique.DEFENSE, 
+					Calculs.nombreAleatoire(0, 5));
+			
+			/* La valeur de l'esquive est compris entre 20 et 40 */
+			caracts.put(Caracteristique.ESQUIVE,
+					Calculs.nombreAleatoire(20, 40));
+			
+			Point position = Calculs.positionAleatoireArene();
+			
+			new StrategieArcher(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, 0);
+			logger.info("Lanceur", "Creation du personnage reussie");
+			
+		} catch (Exception e) {
+			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+	}
+
+	public static void main(String[] args) {
 		
 		// init des arguments
 		int port = Constantes.PORT_DEFAUT;
@@ -54,45 +99,7 @@ public class LanceArcher {
 			}
 		}
 		
-		// creation du logger
-		LoggerProjet logger = null;
-		try {
-			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
-		
-		// lancement du serveur
-		try {
-			String ipConsole = InetAddress.getLocalHost().getHostAddress();
-			
-			logger.info("Lanceur", "Creation du personnage...");
-			
-			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			
-			/* La valeur de la force est compris entre 20 et 60 */
-			caracts.put(Caracteristique.FORCE, 
-					Calculs.nombreAleatoire(20, 60));
-			
-			/* La valeur de la défense est compris entre 0 et 5 */
-			caracts.put(Caracteristique.DEFENSE, 
-					Calculs.nombreAleatoire(0, 5));
-			
-			/* La valeur de l'esquive est compris entre 20 et 40 */
-			caracts.put(Caracteristique.ESQUIVE,
-					Calculs.nombreAleatoire(20, 40));
-			
-			Point position = Calculs.positionAleatoireArene();
-			
-			new StrategieArcher(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation du personnage reussie");
-			
-		} catch (Exception e) {
-			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
+		LanceArcher a = new LanceArcher();
+		a.lancerArcher(port,ipArene);
 	}
 }

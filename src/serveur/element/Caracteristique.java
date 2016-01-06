@@ -33,7 +33,14 @@ public enum Caracteristique {
 	/**
 	 * Esquive : Permet d'esquiver les attaques enemies. 
 	 */
-	ESQUIVE("Esquive", "ESQ", 0, 70, 0);
+	ESQUIVE("Esquive", "ESQ", 0, 70, 0),
+	
+	
+	/**
+	 * Bouclier : permet de ne pas prendre des dégats suite à un rammassage d'une potion
+	 */
+	
+	BOUCLIER("Bouclier","BOU",0,1,0);
 	
 	/**
 	 * Nom complet.

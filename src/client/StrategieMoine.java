@@ -32,9 +32,9 @@ public class StrategieMoine extends StrategiePersonnage {
 	 */
 	public StrategieMoine(String ipArene, int port, String ipConsole, 
 			String nom, String groupe, HashMap<Caracteristique, Integer> caracts,
-			int nbTours, Point position, LoggerProjet logger) {
+			int nbTours, Point position, LoggerProjet logger, int ref) {
 		
-		super (ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
+		super (ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, ref);
 	}
 
 	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
@@ -64,7 +64,7 @@ public class StrategieMoine extends StrategiePersonnage {
 		}
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
-			console.setPhrase("Je médite...");
+			console.setPhrase("Je mï¿½dite...");
 			arene.mediter (refRMI);
 		} 
 		else {
@@ -93,7 +93,7 @@ public class StrategieMoine extends StrategiePersonnage {
 				}
 				else
 				{
-					console.setPhrase("Je médite...");
+					console.setPhrase("Je mï¿½dite...");
 					arene.mediter (refRMI);
 				}
 			}

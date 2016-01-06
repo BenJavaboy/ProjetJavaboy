@@ -22,8 +22,8 @@ public class Personnage extends Element {
 	 * @param groupe d'etudiants du personnage
 	 * @param caracts caracteristiques du personnage
 	 */
-	public Personnage(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {
-		super(nom, groupe, caracts);
+	public Personnage(String nom, String groupe, HashMap<Caracteristique, Integer> caracts, int ref) {
+		super(nom, groupe, caracts, ref);
 	}
 	
 	/**

@@ -39,20 +39,9 @@ public class StrategieVoleur extends StrategiePersonnage {
 	 */
 	public StrategieVoleur(String ipArene, int port, String ipConsole, 
 			String nom, String groupe, HashMap<Caracteristique, Integer> caracts,
-			int nbTours, Point position, LoggerProjet logger) {
-		super(ipArene,port,ipConsole,nom,groupe,caracts,nbTours,position,logger);
-		/*logger.info("Lanceur", "Creation de la console...");
+			int nbTours, Point position, LoggerProjet logger, int ref) {
 		
-		try {
-			console = new Console(ipArene, port, ipConsole, this, 
-					new Personnage(nom, groupe, caracts), 
-					nbTours, position, logger);
-			logger.info("Lanceur", "Creation de la console reussie");
-			
-		} catch (Exception e) {
-			logger.info("Personnage", "Erreur lors de la creation de la console : \n" + e.toString());
-			e.printStackTrace();
-		}*/
+		super(ipArene,port,ipConsole,nom,groupe,caracts,nbTours,position,logger, ref);
 	}
 
 	// TODO etablir une strategie afin d'evoluer dans l'arene de combat
@@ -82,7 +71,7 @@ public class StrategieVoleur extends StrategiePersonnage {
 			}
 			
 			if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
-				console.setPhrase("Je suis à la recherche de ma prochaine victime");
+				console.setPhrase("Je suis ï¿½ la recherche de ma prochaine victime");
 				arene.deplace(refRMI, 0); 
 				
 			} else {
@@ -109,7 +98,6 @@ public class StrategieVoleur extends StrategiePersonnage {
 					console.setPhrase("Je vais vers mon voisin pour l'assiner " + elemPlusProche.getNom());
 					
 					Point pCible = arene.getPosition(refCible);
-					//pCible.x = pCible.x+;
 					
 					//arene.deplaceVoleur(refRMI, pCible);
 					arene.deplaceVoleur(refRMI, pCible);

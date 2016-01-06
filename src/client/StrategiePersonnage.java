@@ -39,13 +39,13 @@ public class StrategiePersonnage {
 	 */
 	public StrategiePersonnage(String ipArene, int port, String ipConsole, 
 			String nom, String groupe, HashMap<Caracteristique, Integer> caracts,
-			int nbTours, Point position, LoggerProjet logger) {
+			int nbTours, Point position, LoggerProjet logger, int ref) {
 		
 		logger.info("Lanceur", "Creation de la console...");
 		
 		try {
 			console = new Console(ipArene, port, ipConsole, this, 
-					new Personnage(nom, groupe, caracts), 
+					new Personnage(nom, groupe, caracts, ref), 
 					nbTours, position, logger);
 			logger.info("Lanceur", "Creation de la console reussie");
 			
@@ -96,17 +96,7 @@ public class StrategiePersonnage {
 				if(elemPlusProche instanceof Potion) { // potion
 					// ramassage
 					console.setPhrase("Je ramasse une potion");
-					
-					if(elemPlusProche.getNom().equals("Teleportation"))	
-					{
-						arene.ramassePotionTeleportation(refRMI, refCible);
-						arene.teleportation(refRMI);
-					}
-					else
-					{
-						
-						arene.ramassePotion(refRMI, refCible);
-					}
+					arene.ramassePotion(refRMI, refCible);
 
 				} else { // personnage
 					// duel

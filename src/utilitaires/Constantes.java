@@ -62,9 +62,21 @@ public class Constantes {
 	public static final int DISTANCE_MIN_INTERACTION = 2;
 
 	/**
-	 * Distance minimale pour que l'archer puis int�ragir avec un autre element de type Personnage.
+	 * Distance minimale pour que l'archer puisse intéragir avec un autre element de type Personnage.
 	 */
 	public static final int DISTANCE_MIN_INTERACTION_ARCHER = 10;
+	
+	
+	/**
+	 * Distance minimale pour que le mage puisse intéragir avec un autre élément de type Personnage
+	 */
+	public static final int DISTANCE_MIN_INTERACTION_MAGE = 5;
+	
+	
+	/**
+	 * Nombre de tours durant lesquels on ne peut plus bouger lorsque l'on boit une potion Freeze
+	 */
+	public static final int NB_TOURS_FREEZE = 3;
 	
 	/**
 	 * Abscisse minimale de l'arene.

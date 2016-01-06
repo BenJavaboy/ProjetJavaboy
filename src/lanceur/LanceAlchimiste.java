@@ -5,32 +5,28 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.HashMap;
 
-import client.StrategieMoine;
+import client.StrategieAlchimiste;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
-/**
- * Lance une Console avec un Element sur l'Arene. 
- * A lancer apres le serveur, eventuellement plusieurs fois.
- */
-public class LanceMoine {
-	
-	private static String usage = "USAGE : java " + LanceMoine.class.getName() + " [ port [ ipArene ] ]";
 
-	public void lancerMoine(int port , String ipArene)
+public class LanceAlchimiste  {
+
+	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
+
+	public void lancerAlchimiste(int port , String ipArene)
 	{
-		String nom = "Moine";
+		String nom = "Alchimiste";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
-		String groupe = "G" + Calculs.nombreAleatoire(0,99); 
+		String groupe = "G7"; 
 		
 		// nombre de tours pour ce personnage avant d'etre deconnecte 
 		// (30 minutes par defaut)
 		// si negatif, illimite
 		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
-		
 		
 		// creation du logger
 		LoggerProjet logger = null;
@@ -50,14 +46,14 @@ public class LanceMoine {
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
 			// seule la force n'a pas sa valeur par defaut (exemple)
-			caracts.put(Caracteristique.FORCE, Calculs.nombreAleatoire(1, 10));
-			caracts.put(Caracteristique.DEFENSE, Calculs.nombreAleatoire(0, 0));
-			caracts.put(Caracteristique.ESQUIVE, Calculs.nombreAleatoire(0, 10));
+			caracts.put(Caracteristique.FORCE, Calculs.nombreAleatoire(1, 30)); 
+			caracts.put(Caracteristique.DEFENSE , Calculs.nombreAleatoire(0, 10)); 
+			caracts.put(Caracteristique.ESQUIVE, Calculs.nombreAleatoire(0, 10)); 
 			
 			Point position = Calculs.positionAleatoireArene();
 			
-			new StrategieMoine(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger,0);
-			logger.info("Lanceur", "Creation du personnage reussie");
+			new StrategieAlchimiste(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, 0);
+			logger.info("Lanceur", "Creation du personnage Alchimiste reussie");
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
@@ -90,8 +86,9 @@ public class LanceMoine {
 				ipArene = args[1];
 			}
 		}
-
-		LanceMoine m = new LanceMoine();
-		m.lancerMoine(port,ipArene);
+		
+		LanceAlchimiste a = new LanceAlchimiste();
+		a.lancerAlchimiste(port,ipArene);
 	}
+	
 }

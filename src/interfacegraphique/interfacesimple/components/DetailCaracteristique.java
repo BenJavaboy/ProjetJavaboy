@@ -51,6 +51,8 @@ public class DetailCaracteristique extends JPanel {
 		case ESQUIVE:
 			couleur = Color.MAGENTA;
 			break;
+		case BOUCLIER:
+			couleur = Color.YELLOW;
 		}
 		
 		// valeur ramenee sur 100, en fonction du max de la caracteristique

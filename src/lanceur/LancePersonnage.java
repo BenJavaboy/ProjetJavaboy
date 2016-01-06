@@ -19,7 +19,8 @@ public class LancePersonnage {
 	
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
-	public static void main(String[] args) {
+	public void lancerPersonnage(int port , String ipArene)
+	{
 		String nom = "Truc";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
@@ -30,6 +31,49 @@ public class LancePersonnage {
 		// si negatif, illimite
 		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
 		
+		
+		// creation du logger
+		LoggerProjet logger = null;
+		try {
+			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+		
+		// lancement du serveur
+		try {
+			String ipConsole = InetAddress.getLocalHost().getHostAddress();
+			
+			logger.info("Lanceur", "Creation du personnage...");
+			
+			// caracteristiques du personnage
+			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
+			// seule la force n'a pas sa valeur par defaut (exemple)
+			caracts.put(Caracteristique.FORCE, 
+					Calculs.valeurCaracAleatoire(Caracteristique.FORCE));
+			
+			/* La valeur de la d�fense est compris entre 5 et 10 */
+			caracts.put(Caracteristique.DEFENSE, 
+					Calculs.nombreAleatoire(5, 10));
+			
+			/* La valeur de l'esquive est compris entre 10 et 20 */
+			caracts.put(Caracteristique.ESQUIVE,
+					Calculs.nombreAleatoire(10, 20));
+			
+			Point position = Calculs.positionAleatoireArene();
+			
+			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, 0);
+			logger.info("Lanceur", "Creation du personnage reussie");
+			
+		} catch (Exception e) {
+			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+	}
+	
+	public static void main(String[] args) {
 		// init des arguments
 		int port = Constantes.PORT_DEFAUT;
 		String ipArene = Constantes.IP_DEFAUT;
@@ -53,37 +97,8 @@ public class LancePersonnage {
 				ipArene = args[1];
 			}
 		}
-		
-		// creation du logger
-		LoggerProjet logger = null;
-		try {
-			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
-		
-		// lancement du serveur
-		try {
-			String ipConsole = InetAddress.getLocalHost().getHostAddress();
-			
-			logger.info("Lanceur", "Creation du personnage...");
-			
-			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			// seule la force n'a pas sa valeur par defaut (exemple)
-			caracts.put(Caracteristique.FORCE, 
-					Calculs.valeurCaracAleatoire(Caracteristique.FORCE)); 
-			
-			Point position = Calculs.positionAleatoireArene();
-			
-			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation du personnage reussie");
-			
-		} catch (Exception e) {
-			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
+						
+		LancePersonnage p = new LancePersonnage();
+		p.lancerPersonnage(port,ipArene);	
 	}
 }

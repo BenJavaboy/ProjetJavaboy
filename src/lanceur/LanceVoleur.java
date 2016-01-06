@@ -20,7 +20,8 @@ public class LanceVoleur {
 	
 	private static String usage = "USAGE : java " + LanceVoleur.class.getName() + " [ port [ ipArene ] ]";
 
-	public static void main(String[] args) {
+	public void lancerVoleur(int port , String ipArene)
+	{
 		String nom = "Voleur";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
@@ -31,6 +32,51 @@ public class LanceVoleur {
 		// si negatif, illimite
 		int nbTours = Constantes.NB_TOURS_PERSONNAGE_DEFAUT;
 		
+		
+		// creation du logger
+		LoggerProjet logger = null;
+		try {
+			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+		
+		// lancement du serveur
+		try {
+			String ipConsole = InetAddress.getLocalHost().getHostAddress();
+			
+			logger.info("Lanceur", "Creation du personnage...");
+			
+			// caracteristiques du personnage
+			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
+			
+			//caractï¿½ristique propre au personnage
+			// Force [25-60]
+			caracts.put(Caracteristique.FORCE, 
+					Calculs.nombreAleatoire(50, 70)); 
+			
+			//Defense 0
+			caracts.put(Caracteristique.DEFENSE,0); 
+			
+			//Esquive [40-70]
+			caracts.put(Caracteristique.ESQUIVE, 
+					Calculs.nombreAleatoire(40, 70)); 
+			
+			Point position = Calculs.positionAleatoireArene();
+			
+			new StrategieVoleur(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger, 0);
+			logger.info("Lanceur", "Creation du personnage reussie");
+			
+		} catch (Exception e) {
+			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
+			e.printStackTrace();
+			System.exit(ErreurLancement.suivant);
+		}
+	}
+	
+	
+	public static void main(String[] args) {
 		// init des arguments
 		int port = Constantes.PORT_DEFAUT;
 		String ipArene = Constantes.IP_DEFAUT;
@@ -55,45 +101,8 @@ public class LanceVoleur {
 			}
 		}
 		
-		// creation du logger
-		LoggerProjet logger = null;
-		try {
-			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
-		
-		// lancement du serveur
-		try {
-			String ipConsole = InetAddress.getLocalHost().getHostAddress();
-			
-			logger.info("Lanceur", "Creation du personnage...");
-			
-			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			
-			//caractéristique propre au personnage
-			// Force [25-60]
-			caracts.put(Caracteristique.FORCE, 
-					Calculs.nombreAleatoire(50, 70)); 
-			
-			//Defense 0
-			caracts.put(Caracteristique.DEFENSE,0); 
-			
-			//Esquive [40-70]
-			caracts.put(Caracteristique.ESQUIVE, 
-					Calculs.nombreAleatoire(40, 70)); 
-			
-			Point position = Calculs.positionAleatoireArene();
-			
-			new StrategieVoleur(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation du personnage reussie");
-			
-		} catch (Exception e) {
-			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
-			e.printStackTrace();
-			System.exit(ErreurLancement.suivant);
-		}
+		LanceVoleur v = new LanceVoleur();
+		v.lancerVoleur(port,ipArene);	
+				
 	}
 }

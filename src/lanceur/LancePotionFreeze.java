@@ -10,13 +10,13 @@ import serveur.element.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
-public class LancePotionTeleportation extends LancePotion{
+public class LancePotionFreeze extends LancePotion{
 	
 	private static String usage = "USAGE : java " + LancePotion.class.getName() + " [ port [ ipArene ] ]";
 
-	public void lancerPotionTeleportation(int port , String ipArene)
+	public void lancerPotionFreeze(int port , String ipArene)
 	{
-		String nom = "Téléportation";
+		String nom = "Freeze";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G7"; 
@@ -83,8 +83,8 @@ public class LancePotionTeleportation extends LancePotion{
 			}
 		}
 		
-		LancePotionTeleportation t = new LancePotionTeleportation();
-		t.lancerPotionTeleportation(port,ipArene);	
+		LancePotionFreeze t = new LancePotionFreeze();
+		t.lancerPotionFreeze(port,ipArene);	
 	}
 }
 
